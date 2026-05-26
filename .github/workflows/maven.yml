@@ -33,21 +33,14 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: ${{ matrix.java_version }}
           cache: maven
-      - name: Cache OWASP Dependency-Check Data
-        uses: actions/cache@v5
-        with:
-          path: ~/.m2/repository/org/owasp/dependency-check-data/
-          key: ${{ runner.os }}-dc-nvd-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-dc-nvd-
       - name: Verify
         id: build
         run: |
           cd jaxws-ri
-          mvn -B -V -Poss-release,dependency-check,snapshots clean verify -Dgpg.skip=true -DskipSBOM -Dittest=true
+          mvn -B -V -Poss-release,snapshots clean verify -Dgpg.skip=true -DskipSBOM -Dittest=true
           cd ..
           echo "jdk=${{ matrix.java_version }}" >> $GITHUB_OUTPUT
       - name: Upload binary image
@@ -71,7 +64,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: ${{ needs.build.outputs.jdk }}
       - name: Checkout tests
         uses: actions/checkout@v6
