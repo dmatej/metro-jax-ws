@@ -40,3 +40,5 @@ updates:
       dependencies:
         patterns:
           - "*"
+        exclude-patterns:
+          - "*:*-plugin"
