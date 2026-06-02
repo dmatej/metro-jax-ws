@@ -56,7 +56,7 @@ jobs:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
           cd jaxws-ri
-          mvn -B -V -fae -Poss-release,dependency-check,snapshots clean verify -Dgpg.skip=true -DskipSBOM -Dittest=true -DskipTests -DskipITs -DnvdApiKey="$NVD_API_KEY" -DnvdApiDelay=6000
+          mvn -B -V -fae -Poss-release,dependency-check,snapshots clean verify -Dgpg.skip=true -DskipSBOM -Dittest=true -DskipTests -DskipITs -DnvdApiKeyEnvironmentVariable=NVD_API_KEY -DnvdApiDelay=600
       - name: Cache Maven Dependencies
         uses: actions/cache/save@v3
         if: always()
